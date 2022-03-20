@@ -157,6 +157,12 @@
     <a href="https://github.com/Rotten-LKZ/table-generator" target="_blank"
       >GitHub</a
     >
+    and
+    <a
+      href="https://gitee.com/rotten_lkz/article-image-generator"
+      target="_blank"
+      >Gitee</a
+    >
   </footer>
 </template>
 
