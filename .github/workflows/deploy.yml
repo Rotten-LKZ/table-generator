@@ -22,7 +22,7 @@ jobs:
         run: |
           npm install
 
-      - name: 🎉 Deploy hexo
+      - name: 🎉 Deploy Vue
         run: |
           npm run build
 
