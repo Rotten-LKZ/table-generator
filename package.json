@@ -9,11 +9,14 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
   },
   "dependencies": {
+    "downloadjs": "^1.4.7",
     "element-plus": "^2.1.4",
+    "html-to-image": "^1.9.0",
     "vue": "^3.2.31"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.1.0",
+    "@types/downloadjs": "^1.4.3",
     "@types/node": "^16.11.25",
     "@vitejs/plugin-vue": "^2.2.2",
     "@vue/eslint-config-prettier": "^7.0.0",

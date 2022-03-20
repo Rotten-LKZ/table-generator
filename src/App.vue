@@ -26,6 +26,8 @@
     </p>
     <hr />
     <p>最后那个表格前表格后文字即在表格前和表格后显示的文字。支持 HTML</p>
+    <hr />
+    <p>生成图片的时候图片宽度固定</p>
     <template #footer>
       <span class="dialog-footer">
         <el-button type="primary" @click="usageDialogVisible = false"
@@ -59,7 +61,8 @@
         active-text="合"
         inactive-text="分"
       /><br />
-      <el-button @click="usageDialogVisible = true">使用说明</el-button>
+      <el-button @click="usageDialogVisible = true">说明</el-button>
+      <el-button @click="generateImage">生成图片</el-button>
     </div>
 
     <div class="table-setting">
@@ -102,7 +105,7 @@
     </div>
   </div>
 
-  <div class="render" :class="isDark ? 'black' : 'light'">
+  <div class="render" :class="isDark ? 'black' : 'light'" id="render">
     <p
       v-for="(value, index) of otherTextShow.before"
       :key="index"
@@ -160,6 +163,8 @@
 <script lang="ts">
 import { ElMessage } from "element-plus";
 import { computed, defineComponent, reactive, ref } from "vue";
+import { toJpeg } from "html-to-image";
+import download from "downloadjs";
 
 interface SubjectsTimes {
   subject: string;
@@ -286,6 +291,24 @@ export default defineComponent({
       table.subjectTime = "";
     }
 
+    // 生成图片
+    function generateImage() {
+      const node = document.getElementById("render");
+      if (node === null) {
+        ElMessage.error("没有找到渲染节点");
+        return;
+      }
+      node.classList.add("generation");
+      toJpeg(node)
+        .then(function (dataUrl) {
+          download(dataUrl, "table.png");
+          node.classList.remove("generation");
+        })
+        .catch(function (error) {
+          ElMessage.error("生成失败，可重试或者尝试截图" + error);
+        });
+    }
+
     return {
       table,
       otherText,
@@ -301,6 +324,7 @@ export default defineComponent({
       addSubject,
       removeSubject,
       insertSubject,
+      generateImage,
     };
   },
 });
@@ -370,6 +394,11 @@ table th {
   box-sizing: border-box;
   font-weight: 400;
   font-family: "PingFang SC", "Microsoft YaHei", Roboto, Arial, sans-serif;
+}
+
+.generation {
+  margin: 0 !important;
+  width: 800px !important;
 }
 
 .black {
